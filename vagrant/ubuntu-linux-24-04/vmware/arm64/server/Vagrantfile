@@ -16,10 +16,10 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "1.1.1"
 
   # Define virtual machine name.
-  config.vm.define "sloopstash-ubuntu-linux-24-04-server"
+  # config.vm.define "sloopstash-ubuntu-linux-24-04-server"
 
   # Set virtual machine hostname.
-  config.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
+  # config.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.201.12"
+  # config.vm.network "private_network", ip: "192.168.201.12"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -66,10 +66,10 @@ Vagrant.configure("2") do |config|
     vf.gui = false
   
     # Allocate memory to the virtual machine.
-    vf.memory = "2048"
+    # vf.memory = "4096"
 
     # Allocate processors to the virtual machine.
-    vf.cpus = "1"
+    # vf.cpus = "1"
   end
   #
   # View the documentation for the provider you are using for more
@@ -90,6 +90,14 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # Define multiple virtual machines.
+  config.vm.define "sloopstash-ubuntu-linux-24-04-server", primary: true do |sloopstash_ubuntu_linux_24_04_server|
+    sloopstash_ubuntu_linux_24_04_server.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
+    sloopstash_ubuntu_linux_24_04_server.vm.network "private_network", ip: "192.168.201.12"
+    sloopstash_ubuntu_linux_24_04_server.vm.provider "vmware_fusion" do |vf|
+      vf.memory = "4096"
+      vf.cpus = "1"
+    end
+  end
   config.vm.define "sloopstash-dev-ubuntu-linux-24-04-server", autostart: false do |sloopstash_dev_ubuntu_linux_24_04_server|
     sloopstash_dev_ubuntu_linux_24_04_server.vm.hostname = "sloopstash-dev-ubuntu-linux-24-04-server"
     sloopstash_dev_ubuntu_linux_24_04_server.vm.network "private_network", ip: "192.168.201.101"

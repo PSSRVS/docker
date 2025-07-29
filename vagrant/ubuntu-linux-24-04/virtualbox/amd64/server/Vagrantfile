@@ -16,10 +16,10 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "1.1.1"
 
   # Define virtual machine name.
-  config.vm.define "sloopstash-ubuntu-linux-24-04-server"
+  # config.vm.define "sloopstash-ubuntu-linux-24-04-server"
 
   # Set virtual machine hostname.
-  config.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
+  # config.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.101.12"
+  # config.vm.network "private_network", ip: "192.168.101.12"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -63,19 +63,19 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     # Enable USB controller for the virtual machine.
-    vb.customize ["modifyvm",:id,"--usb","on"]
+    # vb.customize ["modifyvm",:id,"--usb","on"]
 
     # Disable GUI when booting the virtual machine.
     vb.gui = false
   
     # Allocate memory to the virtual machine.
-    vb.memory = "2048"
+    # vb.memory = "4096"
 
     # Allocate processors to the virtual machine.
-    vb.cpus = "1"
+    # vb.cpus = "1"
 
     # Set name for the virtual machine.
-    vb.name = "sloopstash-ubuntu-linux-24-04-server"
+    # vb.name = "sloopstash-ubuntu-linux-24-04-server"
   end
   #
   # View the documentation for the provider you are using for more
@@ -96,6 +96,15 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # Define multiple virtual machines.
+  config.vm.define "sloopstash-ubuntu-linux-24-04-server", primary: true do |sloopstash_ubuntu_linux_24_04_server|
+    sloopstash_ubuntu_linux_24_04_server.vm.hostname = "sloopstash-ubuntu-linux-24-04-server"
+    sloopstash_ubuntu_linux_24_04_server.vm.network "private_network", ip: "192.168.101.12"
+    sloopstash_ubuntu_linux_24_04_server.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+      vb.cpus = "1"
+      vb.name = "sloopstash-ubuntu-linux-24-04-server"
+    end
+  end
   config.vm.define "sloopstash-dev-ubuntu-linux-24-04-server", autostart: false do |sloopstash_dev_ubuntu_linux_24_04_server|
     sloopstash_dev_ubuntu_linux_24_04_server.vm.hostname = "sloopstash-dev-ubuntu-linux-24-04-server"
     sloopstash_dev_ubuntu_linux_24_04_server.vm.network "private_network", ip: "192.168.101.101"
